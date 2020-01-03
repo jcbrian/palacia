@@ -1,0 +1,21 @@
+{
+    "positiveKeywords" : ["PAL","ACE", "SOCK", "WHITE"],
+    "negativeKeywords": ["BLACK"],
+    "targetedSize" : "S/M",
+    "email": "laflame954@gmail.com",
+    "firstName": "El",
+    "lastName": "Padrino",
+    "address1": "1234 Main Street",
+    "city": "Albany",
+    "country": "United States",
+    "state": "NY",
+    "zip": "12204",
+    "phone": "1023343040",
+    "cardNumber": "4408 9314 2453 4842",
+    "nameOnCard": "Hethorough Biongle",
+    "month":"6",
+    "year": "2021",
+    "expiry": "06/23",
+    "securityCode": "080"
+    
+}

@@ -1,0 +1,25 @@
+{
+  "name": "palace",
+  "version": "1.0.0",
+  "description": "palace bot cause i like palace",
+  "main": "scrape.js",
+  "scripts": {
+    "captcha": "captcha-harvester hc --set https://shop-usa.palaceskateboards.com/ 6LeoeSkTAAAAAA9rkZs5oS82l69OEYjKRZAiKdaF",
+    "palace": "node checkout",
+    "start": "concurrently \"captcha-harvester hc --set https://shop-usa.palaceskateboards.com/ 6LeoeSkTAAAAAA9rkZs5oS82l69OEYjKRZAiKdaF\" \"node checkout\" "
+  },
+  "author": "jcbrian",
+  "license": "ISC",
+  "dependencies": {
+    "captcha-harvester": "^1.1.4",
+    "cheerio": "^1.0.0-rc.3",
+    "concurrently": "^4.1.1",
+    "dayjs": "^1.8.15",
+    "form-data": "^2.3.3",
+    "got": "^9.6.0",
+    "is-port-reachable": "^2.0.1",
+    "moment": "^2.24.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {}
+}
