@@ -349,7 +349,7 @@ function contactInfo(objectOfUsefulThings, captcha) {
     console.log(shippingURL)
     return new Promise((resolve, reject) => {
         //#content > div > div.palace-checkout-body.clearfix > div.step > form > div.step__sections > div.section.section--shipping-method > div.section__content > div > div > div
-        let shitToPassForOtherFunction = objectOfUsefulThings
+        let dataForNextFunction = objectOfUsefulThings
         request(opts, (e, r, b) => {
             if (e) {
                 console.log(e.code === 'ETIMEDOUT');
@@ -361,19 +361,19 @@ function contactInfo(objectOfUsefulThings, captcha) {
             if (r.statusCode == 200) {
                 console.log('request for first step of shipping has been completed')
                 let $ = cheerio.load(b)
-                shitToPassForOtherFunction.currentStep = $('#previous_step').attr('value')
-                shitToPassForOtherFunction.nextStep = $('#content > div > div.palace-checkout-body.clearfix > div.step > form > input[type=hidden]:nth-child(4)').val()
-                shitToPassForOtherFunction.shippingValue = $('#content > div > div.palace-checkout-body.clearfix > div.step > form > div.step__sections > div.section.section--shipping-method > div.section__content > div > div > div').attr('data-shipping-method')
+                dataForNextFunction.currentStep = $('#previous_step').attr('value')
+                dataForNextFunction.nextStep = $('#content > div > div.palace-checkout-body.clearfix > div.step > form > input[type=hidden]:nth-child(4)').val()
+                dataForNextFunction.shippingValue = $('#content > div > div.palace-checkout-body.clearfix > div.step > form > div.step__sections > div.section.section--shipping-method > div.section__content > div > div > div').attr('data-shipping-method')
                 //height and widith r not scraping
-                console.log(shitToPassForOtherFunction.shippingValue , 'jfajsljflajslj')
+                console.log(dataForNextFunction.shippingValue , 'jfajsljflajslj')
                 //going to pull like full price and log it
                 let totalPrice = $('<input class="input-radio" data-checkout-total-shipping="$12.00" data-checkout-total-shipping-cents="1200" data-checkout-shipping-rate="$12.00" data-checkout-original-shipping-rate="$12.00" data-checkout-total-taxes="$0.00" data-checkout-total-taxes-cents="0" data-checkout-total-price="$127.00" data-checkout-total-price-cents="12700" data-checkout-payment-due="$127.00" data-checkout-payment-due-cents="12700" data-checkout-payment-subform="required" data-checkout-subtotal-price="$115.00" data-checkout-subtotal-price-cents="11500" data-backup="shopify-UPS%20Ground-12.00" aria-label="UPS Ground. $12.00" type="radio" value="shopify-UPS%20Ground-12.00" name="checkout[shipping_rate][id]" id="checkout_shipping_rate_id_shopify-ups20ground-12_00" checked="checked">').attr('data-checkout-subtotal-price')
                 console.log(`the total price of the item you are checking out is ${totalPrice}`)
-                shitToPassForOtherFunction.TotalWithCents = $('.payment-due__price').attr('data-checkout-payment-due-target')
-                shitToPassForOtherFunction.shippingToken = $('#content > div > div.palace-checkout-body.clearfix > div.step > form > input[type=hidden]:nth-child(2)').attr('value')
-                console.log(shitToPassForOtherFunction.shippingToken)
+                dataForNextFunction.TotalWithCents = $('.payment-due__price').attr('data-checkout-payment-due-target')
+                dataForNextFunction.shippingToken = $('#content > div > div.palace-checkout-body.clearfix > div.step > form > input[type=hidden]:nth-child(2)').attr('value')
+                console.log(dataForNextFunction.shippingToken)
                 
-                resolve(shitToPassForOtherFunction)
+                resolve(dataForNextFunction)
             }
 
 
@@ -382,33 +382,33 @@ function contactInfo(objectOfUsefulThings, captcha) {
     })
 }
 //shipping option page 
-function secondStepOfShipping(shitForSecondShipForm) {
+function secondStepOfShipping(secondShipFormData) {
     let {
         shopID
-    } = shitForSecondShipForm
+    } = secondShipFormData
     let {
         checkoutURL
-    } = shitForSecondShipForm
+    } = secondShipFormData
     let {
         method
-    } = shitForSecondShipForm
+    } = secondShipFormData
     let {
         token
-    } = shitForSecondShipForm
+    } = secondShipFormData
     let {
         currentStep
-    } = shitForSecondShipForm
+    } = secondShipFormData
     let {
         shippingValue
-    } = shitForSecondShipForm
+    } = secondShipFormData
     let {
         nextStep
-    } = shitForSecondShipForm
-    let fullPriceWithCents = shitForSecondShipForm.TotalWithCents
+    } = secondShipFormData
+    let fullPriceWithCents = secondShipFormData.TotalWithCents
     let path = `${checkoutURL}?previous_step=contact_information&step=${currentStep}`
     let URL = `https://shop-usa.palaceskateboards.com${checkoutURL}`
 
-    console.log(shitForSecondShipForm)
+    console.log(secondShipFormData)
     let opts = {
         url: URL,
         authority: 'shop-usa.palaceskateboards.com',
@@ -448,32 +448,32 @@ function secondStepOfShipping(shitForSecondShipForm) {
             let $ = cheerio.load(b)
             let dataSelect = $('.radio-wrapper').attr('data-select-gateway')
             let checkoutToken = $('#content > div > div.palace-checkout-body.clearfix > div.step > div > form > input[type=hidden]:nth-child(2)').attr('value')
-            submitPayment(shitForSecondShipForm, dataSelect, fullPriceWithCents)
+            submitPayment(secondShipFormData, dataSelect, fullPriceWithCents)
         }
     })
 }
 
-function submitPayment(shitFromOtherFunctionToPassToThisNewFunction, dataSelectNumber, fullPrice) {
+function submitPayment(newData, dataSelectNumber, fullPrice) {
     let {
         shopID
-    } = shitFromOtherFunctionToPassToThisNewFunction
+    } = newData
     let {
         checkoutURL
-    } = shitFromOtherFunctionToPassToThisNewFunction
+    } = newData
     let {
         method
-    } = shitFromOtherFunctionToPassToThisNewFunction
+    } = newData
     let {
         token
-    } = shitFromOtherFunctionToPassToThisNewFunction
+    } = newData
     let {
         currentStep
-    } = shitFromOtherFunctionToPassToThisNewFunction
+    } = newData
     let {
         shippingValue
-    } = shitFromOtherFunctionToPassToThisNewFunction
-    let previousStep = shitFromOtherFunctionToPassToThisNewFunction.nextStep
-    console.log(shitFromOtherFunctionToPassToThisNewFunction)
+    } = newData
+    let previousStep = newData.nextStep
+    console.log(newData)
     let checkoutURLSplit = checkoutURL.split('/')
     let identity = checkoutURLSplit[3]
     console.log(dataSelectNumber)
