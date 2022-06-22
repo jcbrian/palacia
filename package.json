@@ -16,7 +16,7 @@
     "concurrently": "^4.1.1",
     "dayjs": "^1.8.15",
     "form-data": "^2.3.3",
-    "got": "^9.6.0",
+    "got": "^11.8.5",
     "is-port-reachable": "^2.0.1",
     "moment": "^2.24.0",
     "request": "^2.88.0"
